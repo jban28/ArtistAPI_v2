@@ -1,9 +1,12 @@
-pip install -r requirements.txt -t "/package-layer/python/lib/python3.10/site-packages"
+pip install -r requirements.txt -t "./packages/python/lib/python3.10/site-packages"
 
-zip -r package-layer.zip ./package-layer
+(cd packages && zip -r ../package-layer.zip ./python)
 
-echo $(aws lambda publish-layer-version \
+echo Layer Version ARN: $(aws lambda publish-layer-version \
     --layer-name "${api_name}_base" \
     --zip-file "fileb://package-layer.zip" \
-    --query "layer-version-arn"
+    --query "LayerVersionArn"
 )
+
+rm ./package-layer.zip
+rm -r ./packages
