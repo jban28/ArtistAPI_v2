@@ -12,7 +12,7 @@ The front-end site for [mattpagett.co.uk](https://www.mattpagett.co.uk) is a Vue
 loaded it requests the data for all of Matt's images from the database and generates routes for each
 based on the `url` attribute for each entry.
 
-# Design/structure
+# Design
 
 ## Database
 The database for this API is a mongoDB database hosted using mongoDB ATLAS. A connection to this 
