@@ -18,8 +18,8 @@ done
 sleep 10s
 
 for func_file in "${lambda_funcs[@]}"; do
-    func_name="${func_file/.py/}"
-    func_name="${API_NAME}_${func_name##*/}"
+    func_filename="${func_file/.py/}"
+    func_name="${API_NAME}_${func_filename##*/}"
 
     rm lambda_function.zip
     zip -j lambda_function.zip $func_file
@@ -29,7 +29,7 @@ for func_file in "${lambda_funcs[@]}"; do
     --runtime "python3.10" \
     --role  "arn:aws:iam::053630928262:role/${API_NAME}/${func_name}_lambda-role" \
     --zip-file "fileb://lambda_function.zip" \
-    --handler "${func_name}.lambda_handler" \
+    --handler "${func_filename}.lambda_handler" \
     --layers "$layer_arn" \
     --environment "Variables={databaseURI=$DATABASE_URI,rootURL=https://artist-api.s3.amazonaws.com}" 
 
