@@ -75,7 +75,7 @@ stages=("live" "dev")
 for stage in "${stages[@]}"; do
     aws lambda add-permission \
         --function-name "arn:aws:lambda:eu-west-2:053630928262:function:$lambda_name:${stage}" \
-        --source-arn "arn:aws:execute-api:eu-west-2:053630928262:bngqwa0zb2/*/$http_method/$path" \
+        --source-arn "arn:aws:execute-api:eu-west-2:053630928262:$api_id/*/$http_method/$path" \
         --principal apigateway.amazonaws.com \
         --statement-id Allow-API_Invoke-Access \
         --action lambda:InvokeFunction
@@ -103,7 +103,7 @@ stages=("live" "dev")
 for stage in "${stages[@]}"; do
     aws lambda add-permission \
         --function-name "arn:aws:lambda:eu-west-2:053630928262:function:$lambda_name:${stage}" \
-        --source-arn "arn:aws:execute-api:eu-west-2:053630928262:bngqwa0zb2/*/$http_method/$path" \
+        --source-arn "arn:aws:execute-api:eu-west-2:053630928262:$api_id/*/$http_method/$path" \
         --principal apigateway.amazonaws.com \
         --statement-id Allow-API_Invoke-Access \
         --action lambda:InvokeFunction
@@ -131,7 +131,7 @@ stages=("live" "dev")
 for stage in "${stages[@]}"; do
     aws lambda add-permission \
         --function-name "arn:aws:lambda:eu-west-2:053630928262:function:$lambda_name:${stage}" \
-        --source-arn "arn:aws:execute-api:eu-west-2:053630928262:bngqwa0zb2/*/$http_method/$path" \
+        --source-arn "arn:aws:execute-api:eu-west-2:053630928262:$api_id/*/$http_method/$path" \
         --principal apigateway.amazonaws.com \
         --statement-id Allow-API_Invoke-Access \
         --action lambda:InvokeFunction
@@ -159,7 +159,7 @@ stages=("live" "dev")
 for stage in "${stages[@]}"; do
     aws lambda add-permission \
         --function-name "arn:aws:lambda:eu-west-2:053630928262:function:$lambda_name:${stage}" \
-        --source-arn "arn:aws:execute-api:eu-west-2:053630928262:bngqwa0zb2/*/$http_method/$path" \
+        --source-arn "arn:aws:execute-api:eu-west-2:053630928262:$api_id/*/$http_method/$path" \
         --principal apigateway.amazonaws.com \
         --statement-id Allow-API_Invoke-Access \
         --action lambda:InvokeFunction
@@ -187,7 +187,7 @@ stages=("live" "dev")
 for stage in "${stages[@]}"; do
     aws lambda add-permission \
         --function-name "arn:aws:lambda:eu-west-2:053630928262:function:$lambda_name:${stage}" \
-        --source-arn "arn:aws:execute-api:eu-west-2:053630928262:bngqwa0zb2/*/$http_method/$path" \
+        --source-arn "arn:aws:execute-api:eu-west-2:053630928262:$api_id/*/$http_method/$path" \
         --principal apigateway.amazonaws.com \
         --statement-id Allow-API_Invoke-Access \
         --action lambda:InvokeFunction
@@ -215,7 +215,7 @@ stages=("live" "dev")
 for stage in "${stages[@]}"; do
     aws lambda add-permission \
         --function-name "arn:aws:lambda:eu-west-2:053630928262:function:$lambda_name:${stage}" \
-        --source-arn "arn:aws:execute-api:eu-west-2:053630928262:bngqwa0zb2/*/$http_method/$path" \
+        --source-arn "arn:aws:execute-api:eu-west-2:053630928262:$api_id/*/$http_method/$path" \
         --principal apigateway.amazonaws.com \
         --statement-id Allow-API_Invoke-Access \
         --action lambda:InvokeFunction

@@ -29,9 +29,10 @@ for func_file in "${lambda_funcs[@]}"; do
     --runtime "python3.10" \
     --role  "arn:aws:iam::053630928262:role/${API_NAME}/${func_name}_lambda-role" \
     --zip-file "fileb://lambda_function.zip" \
-    --handler "${func_filename}.lambda_handler" \
+    --handler "${func_filename##*/}.lambda_handler" \
     --layers "$layer_arn" \
-    --environment "Variables={databaseURI=$DATABASE_URI,rootURL=https://artist-api.s3.amazonaws.com}" 
+    --environment "Variables={databaseURI=$DATABASE_URI,rootURL=https://artist-api.s3.amazonaws.com}" \
+    --query "FunctionArn"
 
     aws lambda create-alias \
     --function-name "$func_name" \
