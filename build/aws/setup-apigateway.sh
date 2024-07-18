@@ -27,7 +27,7 @@ image_data_resource=$(aws apigateway create-resource \
 image_data_id_resource=$(aws apigateway create-resource \
     --rest-api-id "$api_id" \
     --parent-id "${image_data_resource}" \
-    --path-part "test" \
+    --path-part "{id}" \
     --query "id" \
     --output "text"
 )
@@ -48,7 +48,7 @@ image_id_resource=$(aws apigateway create-resource \
 login_resource=$(aws apigateway create-resource \
     --rest-api-id "$api_id" \
     --parent-id "$root_resource_id" \
-    --path-part "{id}" \
+    --path-part "login" \
     --query "id" \
     --output "text"
 )
@@ -139,7 +139,7 @@ done
 
 http_method="PUT"
 path="{id}"
-resource_id=$image_data_resource
+resource_id=$image_data_id_resource
 lambda_name="${API_NAME}_image-data_id_${http_method}"
 aws apigateway put-method \
     --rest-api-id "$api_id" \
@@ -167,7 +167,35 @@ done
 
 http_method="DELETE"
 path="{id}"
-resource_id=$image_resource
+resource_id=$image_id_resource
+lambda_name="${API_NAME}_image_id_${http_method}"
+aws apigateway put-method \
+    --rest-api-id "$api_id" \
+    --resource-id "$resource_id" \
+    --http-method "$http_method" \
+    --authorization-type "CUSTOM" \
+    --authorizer-id "$auth_id"
+
+aws apigateway put-integration \
+    --rest-api-id "$api_id" \
+    --resource-id "$resource_id" \
+    --http-method "$http_method" \
+    --type "AWS_PROXY" \
+    --integration-http-method "POST" \
+    --uri "arn:aws:apigateway:eu-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-2:053630928262:function:$lambda_name:\${stageVariables.stageName}/invocations"
+stages=("live" "dev")
+for stage in "${stages[@]}"; do
+    aws lambda add-permission \
+        --function-name "arn:aws:lambda:eu-west-2:053630928262:function:$lambda_name:${stage}" \
+        --source-arn "arn:aws:execute-api:eu-west-2:053630928262:$api_id/*/$http_method/$path" \
+        --principal apigateway.amazonaws.com \
+        --statement-id Allow-API_Invoke-Access \
+        --action lambda:InvokeFunction
+done
+
+http_method="PUT"
+path="{id}"
+resource_id=$image_id_resource
 lambda_name="${API_NAME}_image_id_${http_method}"
 aws apigateway put-method \
     --rest-api-id "$api_id" \
