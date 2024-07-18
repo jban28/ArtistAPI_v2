@@ -1,0 +1,3 @@
+aws s3api create-bucket --bucket "${API_NAME}" --create-bucket-configuration "LocationConstraint=eu-west-2"
+aws s3api put-public-access-block --bucket "${API_NAME}" --public-access-block-configuration "BlockPublicAcls=False,IgnorePublicAcls=False,BlockPublicPolicy=False,RestrictPublicBuckets=False"
+aws s3api put-bucket-policy --bucket "${API_NAME}" --policy "{\"Version\": \"2012-10-17\",\"Statement\": [{\"Sid\": \"PublicReadGetObject\",\"Effect\": \"Allow\",\"Principal\": \"*\",\"Action\": \"s3:getObject\",\"Resource\": \"arn:aws:s3:::${API_NAME}/*\"}]}"
