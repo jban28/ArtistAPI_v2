@@ -1,0 +1,26 @@
+name: Update Live Lambda Aliases
+on:
+  push:
+    branches:
+      - main
+  
+jobs:
+  update-aliases:
+    name: Update Live Lambda Aliases
+    runs-on: ubuntu-latest
+    outputs:
+      changes: ${{ steps.find-updated-lambda-functions.outputs.updated_funcs_count }}
+      changed_funcs: ${{ steps.find-updated-lambda-functions.outputs.updated_funcs }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS CLI
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-2
+
+      - name: Deploy changes to Lambda
+        run: bash .github/scripts/update-live-lambda-aliases.sh
