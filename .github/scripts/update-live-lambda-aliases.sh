@@ -15,5 +15,4 @@ do
         --function-name="${func_name}" \
         --name "live" \
         --function-version "${func_version}"
-    fi
 done
