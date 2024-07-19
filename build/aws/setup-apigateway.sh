@@ -226,12 +226,6 @@ http_method="PUT"
 path="{id}"
 resource_id=$image_id_resource
 lambda_name="${API_NAME}_image_id_${http_method}"
-aws apigateway put-method \
-    --rest-api-id "$api_id" \
-    --resource-id "$resource_id" \
-    --http-method "$http_method" \
-    --authorization-type "CUSTOM" \
-    --authorizer-id "$auth_id"
 s3roleARN=$(aws iam create-role \
     --role-name "${API_NAME}s3PutRole" \
     --path "/${API_NAME}/" \
@@ -248,6 +242,13 @@ s3policyARN=$(aws iam create-policy \
 aws iam attach-role-policy \
     --role-name "${API_NAME}s3PutRole" \
     --policy-arn "${s3policyARN}"
+aws apigateway put-method \
+    --rest-api-id "$api_id" \
+    --resource-id "$resource_id" \
+    --http-method "$http_method" \
+    --authorization-type "CUSTOM" \
+    --authorizer-id "$auth_id" \
+    --request-parameters "method.request.path.id=true" 
 aws apigateway put-integration \
     --rest-api-id "$api_id" \
     --resource-id "$resource_id" \
@@ -255,7 +256,8 @@ aws apigateway put-integration \
     --credentials "${s3roleARN}"\
     --type "AWS" \
     --integration-http-method "PUT" \
-    --uri "arn:aws:apigateway:eu-west-2:${API_NAME}.s3:path/${API_NAME}/{context.authorizer.artist}/{method.request.path.id}"
+    --uri "arn:aws:apigateway:eu-west-2:${API_NAME}.s3:path/${API_NAME}/{artist}/{id}"\
+    --request-parameters "integration.request.path.id=method.request.path.id"
 
 aws apigateway create-deployment \
     --rest-api-id "$api_id" \
