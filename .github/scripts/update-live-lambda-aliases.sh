@@ -1,18 +1,17 @@
-func_files=($(ls src/lambda-functions/*.py))
-for func_file in "${func_files[@]}"
-do
+lambda_funcs=($(ls src/lambda_functions/*.py))
+
+for func_file in "${lambda_funcs[@]}"; do
     func_name="${func_file/.py/}"
     func_name="artist-api-lambda_${func_name##*/}"
 
-    func_version=$(aws lambda get-alias \
+    version=$(aws lambda publish-version \
         --function-name="${func_name}" \
-        --name "dev" \
-        --query "FunctionVersion" \
-        --output "text"
+        --query "Version"
     )
 
+    version=${version//\"/}
     aws lambda update-alias \
-        --function-name="${func_name}" \
+        --function-name "${func_name}" \
         --name "live" \
-        --function-version "${func_version}"
+        --function-version $version
 done
