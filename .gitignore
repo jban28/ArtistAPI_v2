@@ -2,3 +2,4 @@
 /package-layer.zip
 /env.sh
 env
+__pycache__
