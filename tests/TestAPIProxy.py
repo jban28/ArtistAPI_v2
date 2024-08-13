@@ -5,6 +5,7 @@ LOCAL_TEST = True
 
 class TestAPIProxy(unittest.TestCase):
     def invoke_lambda(
+        self,
         handler_func,
         http_method,
         resource=None,
@@ -94,7 +95,7 @@ class TestAPIProxy(unittest.TestCase):
                 "isBase64Encoded": False
             }
 
-            return handler_func(test_json)
+            return handler_func(test_json, 'context')
 
         else:
             return requests.request(http_method, 
