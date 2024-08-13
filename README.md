@@ -83,3 +83,13 @@ the code on the `main` branch. Should this occur, it can be resolved by pushing 
 ### Layers
 A single layer containing required packages is sufficient as all functions generally have 
 similar requirements (see [requirements.txt](./requirements.txt))
+
+
+
+# Testing
+Unit tests should be written for all code in the `src` folder for this project, as
+well as for any API endpoints that do not have corresponding lambda functions. It should 
+be possible to test the lambda function code directly whilst it is under development as 
+well as once it is uploaded to the dev enviroment or published to the live environment, and
+where possible the code used to perform the tests in these three environments should be the
+same.
