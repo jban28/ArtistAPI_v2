@@ -1,16 +1,16 @@
 import unittest
-import TestAPIProxy
+from test_lib import TestAPIProxy
 import json
 import sys
 sys.path.append('./src/lambda-functions')
-lambda_handler = __import__('image-data_GET').lambda_handler
+lambda_handler = __import__('image-data_POST').lambda_handler
 
-class Test_ImageData_GET(TestAPIProxy.TestAPIProxy):
+class Test_ImageData_POST(TestAPIProxy.TestAPIProxy):
     def test_valid(self):
         self.assertEqual(
             self.invoke_lambda(
                 lambda_handler,
-                'GET',
+                'POST',
                 resource=None,
                 body=None,
                 url_params=None,

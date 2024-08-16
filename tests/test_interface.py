@@ -1,7 +1,7 @@
-from Test_ImageData_GET import Test_ImageData_GET
+from lambda_function_tests import *
 import unittest
-import TestAPIProxy
+import test_lib
 
 if __name__ == '__main__':
-    TestAPIProxy.LOCAL_TEST = False
+    test_lib.config.LOCAL_TEST = False
     unittest.main()

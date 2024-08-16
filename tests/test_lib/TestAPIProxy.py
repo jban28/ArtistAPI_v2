@@ -1,7 +1,6 @@
 import unittest
 import requests
-
-LOCAL_TEST = True
+from . import config
 
 class TestAPIProxy(unittest.TestCase):
     def invoke_lambda(
@@ -20,7 +19,7 @@ class TestAPIProxy(unittest.TestCase):
             for param_name in url_params:
                 url = url.replace('{' + param_name + '}', url_params[param_name])
 
-        if LOCAL_TEST:
+        if config.LOCAL_TEST:
             test_json = {
                 "resource": resource, # Changed
                 "path": url, # Changed
