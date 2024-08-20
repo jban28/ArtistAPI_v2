@@ -8,9 +8,9 @@ jobs:
   unittest:
     name: Run Unit Tests
     runs-on: ubuntu-latest
-    outputs:
-      success-local: ${{ steps.run-local-tests.outputs.success }}
-      success-dev-stage: ${{ steps.run-local-tests.outputs.success }}
+    # outputs:
+    #   success-local: ${{ steps.run-local-tests.outputs.success }}
+    #   success-dev-stage: ${{ steps.run-local-tests.outputs.success }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -29,7 +29,8 @@ jobs:
   update-aliases:
     name: Update Live Lambda Aliases
     runs-on: ubuntu-latest
-    if: {{ jobs.unittest.outputs.success-local == 0 && jobs.unittest.outputs.success-dev-stage == 0}}
+    needs: unittest
+    # if: {{ jobs.unittest.outputs.success-local == 0 && jobs.unittest.outputs.success-dev-stage == 0}}
     # outputs:
     #   changes: ${{ steps.find-updated-lambda-functions.outputs.updated_funcs_count }}
     #   changed_funcs: ${{ steps.find-updated-lambda-functions.outputs.updated_funcs }}
