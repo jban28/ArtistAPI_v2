@@ -1,5 +1,6 @@
 import unittest
 import requests
+import json
 from . import config
 
 class TestAPIProxy(unittest.TestCase):
@@ -7,22 +8,22 @@ class TestAPIProxy(unittest.TestCase):
         self,
         handler_func,
         http_method,
-        resource=None,
+        resource,
         body=None,
         url_params=None,
         query_params=None,
         headers=None,
     ):
-        url = resource
+        path = resource
 
         if url_params:
             for param_name in url_params:
-                url = url.replace('{' + param_name + '}', url_params[param_name])
+                path = path.replace('{' + param_name + '}', url_params[param_name])
 
         if config.TEST_ENV == 'LOCAL':
             test_json = {
                 "resource": resource, # Changed
-                "path": url, # Changed
+                "path": path, # Changed
                 "httpMethod": http_method, # Changed
                 "headers": headers, # Changed
                 "multiValueHeaders": {
@@ -97,12 +98,22 @@ class TestAPIProxy(unittest.TestCase):
             return handler_func(test_json, 'context')
 
         elif (config.TEST_ENV == 'DEV' or config.TEST_ENV == 'LIVE'):
-            return requests.request(http_method, 
-                url,
+            base_url = 'https://78lf70b7ha.execute-api.eu-west-2.amazonaws.com/'
+            base_url += 'live' if config.TEST_ENV == 'LIVE' else 'dev'
+            
+            full_url = base_url + path
+            
+            response =  requests.request(http_method, 
+                full_url,
                 params=query_params,
                 json=body,
                 headers=headers
             )
+
+            return {
+                "statusCode": response.status_code,
+                "body": response.text
+            }
 
         else:
             raise ValueError('Unexpected value for test environment, expected \

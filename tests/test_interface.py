@@ -1,6 +1,6 @@
-from lambda_function_tests import *
+from test_classes import *
 import unittest
 import test_lib
 
-test_lib.config.TEST_ENV = 'LOCAL'
+test_lib.config.TEST_ENV = 'DEV'
 unittest.main()

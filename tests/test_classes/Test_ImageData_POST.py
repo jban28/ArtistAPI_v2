@@ -11,7 +11,7 @@ class Test_ImageData_POST(TestAPIProxy.TestAPIProxy):
             self.invoke_lambda(
                 lambda_handler,
                 'POST',
-                resource=None,
+                resource='/image-data',
                 body=None,
                 url_params=None,
                 query_params=None,
