@@ -19,7 +19,7 @@ class TestAPIProxy(unittest.TestCase):
             for param_name in url_params:
                 url = url.replace('{' + param_name + '}', url_params[param_name])
 
-        if config.LOCAL_TEST:
+        if config.TEST_ENV == 'LOCAL':
             test_json = {
                 "resource": resource, # Changed
                 "path": url, # Changed
@@ -96,10 +96,14 @@ class TestAPIProxy(unittest.TestCase):
 
             return handler_func(test_json, 'context')
 
-        else:
+        elif (config.TEST_ENV == 'DEV' or config.TEST_ENV == 'LIVE'):
             return requests.request(http_method, 
                 url,
                 params=query_params,
                 json=body,
                 headers=headers
             )
+
+        else:
+            raise ValueError('Unexpected value for test environment, expected \
+                "LOCAL", "DEV" or "LIVE" but got "' + config.TEST_ENV + '"')

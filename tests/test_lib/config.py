@@ -1,1 +1,1 @@
-LOCAL_TEST = True
+TEST_ENV = 'LOCAL'
