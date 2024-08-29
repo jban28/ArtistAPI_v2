@@ -9,10 +9,6 @@ jobs:
     name: Update Live Lambda Aliases
     runs-on: ubuntu-latest
     needs: unittest
-    # if: {{ jobs.unittest.outputs.success-local == 0 && jobs.unittest.outputs.success-dev-stage == 0}}
-    # outputs:
-    #   changes: ${{ steps.find-updated-lambda-functions.outputs.updated_funcs_count }}
-    #   changed_funcs: ${{ steps.find-updated-lambda-functions.outputs.updated_funcs }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
