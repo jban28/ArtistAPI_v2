@@ -11,19 +11,19 @@
   {
     "url": "/bodies/shorts_1",
     "name": "Shorts 1",
-    "srcThumb": "Matt_Pagett/bodies/thumb/Shorts_1.jpg",
-    "srcFull": "Matt_Pagett/bodies/full/Shorts_1.jpg",
+    "srcThumb": "Test_User/thumb/Shorts_1.jpg",
+    "srcFull": "Test_User/full/Shorts_1.jpg",
     "caption": "Shorts 1; pen on paper; 21 x 21 cm, 2020",
-    "series": "bodies",
-    "sequence": 24
+    "series": "sampleSeries1",
+    "sequence": 2
   },
   {
-    "url": "/bodies/trainer_1",
-    "name": "Trainer 1",
-    "srcThumb": "Matt_Pagett/bodies/thumb/Trainer_1.jpg",
-    "srcFull": "Matt_Pagett/bodies/full/Trainer_1.jpg",
-    "caption": "Trainer 1; pen on paper; 21 x 21 cm, 2020",
-    "series": "bodies",
-    "sequence": 27
+    "url":"/bodies/trainer_1",
+    "name":"Trainer 1",
+    "srcThumb":"Test_User/thumb/Trainer_1.jpg",
+    "srcFull":"Test_User/full/Trainer_1.jpg",
+    "caption":"Trainer 1; pen on paper; 21 x 21 cm, 2020",
+    "series":"sampleSeries1",
+    "sequence":1
   }
 ]
