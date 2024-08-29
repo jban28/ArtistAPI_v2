@@ -39,7 +39,7 @@ file structure pattern is `/artist/full/{id}.jpg` for full size images and `arti
 for thumbnails
 
 ## REST API (AWS API Gateway)
-REST API created with two stages `main` and `dev`, which will point to correspondingly-named aliases
+REST API created with two stages `live` and `dev`, which will point to correspondingly-named aliases
 of the relevant lambda functions.
 
 ### Endpoints
@@ -58,7 +58,7 @@ Authenticated endpoints use a lambda function authoriser to validate the JWT gen
 login endpoint.
 
 ## Lambda Configuration
-Each lambda function has a `main` and `dev` alias. `main` points to a specified version of the 
+Each lambda function has a `live` and `dev` alias. `main` points to a specified version of the 
 function, `dev` points to the `$latest` version. The code for each lambda function is published on 
 each push to the corresponding git branch. Becasue of this set up, all commits to the `main` branch 
 should be merged in from `dev`, as this ensures that `$latest` is in sync with the `dev` branch. 
@@ -87,9 +87,9 @@ similar requirements (see [requirements.txt](./requirements.txt))
 
 
 # Testing
-Unit tests should be written for all code in the `src` folder for this project, as
-well as for any API endpoints that do not have corresponding lambda functions. It should 
-be possible to test the lambda function code directly whilst it is under development as 
-well as once it is uploaded to the dev enviroment or published to the live environment, and
-where possible the code used to perform the tests in these three environments should be the
-same.
+The tests folder contains a file called `test_interface.py`. This script runs unit tests 
+for the code in the `src` folder. The test environment can be set by passing either
+`LOCAL`, `DEV` or `LIVE` as the first command line argument to `test_interface.py`.
+`LOCAL` runs tests using the local code, dev and live run tests through the corresponding 
+API Gateway stages. Unit tests are run automatically on the local code and the development 
+stage any time updated code is pushed to the remote `dev` branch using github actions.
