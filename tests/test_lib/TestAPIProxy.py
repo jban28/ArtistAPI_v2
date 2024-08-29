@@ -13,8 +13,30 @@ class TestAPIProxy(unittest.TestCase):
         url_params=None,
         query_params=None,
         headers=None,
+        auth=False
     ):
         path = resource
+        
+        if auth:
+            auth_json = {
+                "principalId": "yyyyyyyy", # The principal user identification associated with the token sent by the client.
+                "policyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                    {
+                        "Action": "execute-api:Invoke",
+                        "Effect": "Allow",
+                        "Resource": None # "arn:aws:execute-api:eu-west-2:{accountId}:{apiId}/{stage}/{httpVerb}/[{resource}/[{child-resources}]]"
+                    }
+                    ]
+                },
+                "context": {
+                    "artist": "Test_User",
+                }
+            }
+        
+        else:
+            auth_json = {}
 
         if url_params:
             for param_name in url_params:
@@ -48,10 +70,7 @@ class TestAPIProxy(unittest.TestCase):
                 "requestContext": {
                     "accountId": "123456789012",
                     "apiId": "id",
-                    "authorizer": {
-                    "claims": None,
-                    "scopes": None
-                    },
+                    "authorizer": auth_json,
                     "domainName": "id.execute-api.us-east-1.amazonaws.com",
                     "domainPrefix": "id",
                     "extendedRequestId": "request-id",
@@ -102,6 +121,9 @@ class TestAPIProxy(unittest.TestCase):
             base_url += 'live' if config.TEST_ENV == 'LIVE' else 'dev'
             
             full_url = base_url + path
+
+            if auth:
+                headers['Authorization'] = config.TEST_AUTH_TOKEN
             
             response =  requests.request(http_method, 
                 full_url,

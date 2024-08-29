@@ -1,5 +1,5 @@
 import unittest
-from test_lib import TestAPIProxy
+from test_lib import TestAPIProxy, config
 import json
 import sys
 sys.path.append('./src/lambda-functions')
@@ -19,7 +19,7 @@ class Test_login_POST(TestAPIProxy.TestAPIProxy):
             ),
             {
                 'statusCode': 200,
-                'body': json.dumps('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcnRpc3QiOiJUZXN0X1VzZXIifQ.MsysHQTVctUs93RbErKyIhkEb3QCSXxPOMCmJygt4kA')
+                'body': json.dumps(config.TEST_AUTH_TOKEN)
             }   
         )
 
