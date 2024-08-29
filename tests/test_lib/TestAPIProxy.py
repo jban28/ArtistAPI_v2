@@ -6,16 +6,13 @@ from . import config
 class TestAPIProxy(unittest.TestCase):
     def invoke_lambda(
         self,
-        handler_func,
-        http_method,
-        resource,
         body=None,
         url_params=None,
         query_params=None,
         headers=None,
         auth=False
     ):
-        path = resource
+        path = self.resource
         
         if auth:
             auth_json = {
@@ -44,9 +41,9 @@ class TestAPIProxy(unittest.TestCase):
 
         if config.TEST_ENV == 'LOCAL':
             test_json = {
-                "resource": resource, # Changed
+                "resource": self.resource, # Changed
                 "path": path, # Changed
-                "httpMethod": http_method, # Changed
+                "httpMethod": self.method, # Changed
                 "headers": headers, # Changed
                 "multiValueHeaders": {
                     "header1": [
@@ -114,7 +111,7 @@ class TestAPIProxy(unittest.TestCase):
                 "isBase64Encoded": False
             }
 
-            return handler_func(test_json, 'context')
+            return self.lambda_handler(test_json, 'context')
 
         elif (config.TEST_ENV == 'DEV' or config.TEST_ENV == 'LIVE'):
             base_url = 'https://78lf70b7ha.execute-api.eu-west-2.amazonaws.com/'
@@ -125,7 +122,7 @@ class TestAPIProxy(unittest.TestCase):
             if auth:
                 headers['Authorization'] = config.TEST_AUTH_TOKEN
             
-            response =  requests.request(http_method, 
+            response =  requests.request(self.method, 
                 full_url,
                 params=query_params,
                 json=body,

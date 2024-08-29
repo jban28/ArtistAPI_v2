@@ -3,15 +3,17 @@ from test_lib import TestAPIProxy
 import json
 import sys
 sys.path.append('./src/lambda-functions')
-lambda_handler = __import__('image-data_POST').lambda_handler
 
 class Test_ImageData_POST(TestAPIProxy.TestAPIProxy):
+    @classmethod
+    def setUpClass(self):
+        self.resource = 'image-data'
+        self.method = 'POST'
+        self.lambda_handler = staticmethod(__import__(self.resource + '_' + self.method).lambda_handler)
+
     def test_valid(self):
         self.assertEqual(
             self.invoke_lambda(
-                lambda_handler,
-                'POST',
-                resource='/image-data',
                 body=None,
                 url_params=None,
                 query_params=None,

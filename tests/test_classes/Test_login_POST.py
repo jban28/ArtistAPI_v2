@@ -3,15 +3,18 @@ from test_lib import TestAPIProxy, config
 import json
 import sys
 sys.path.append('./src/lambda-functions')
-lambda_handler = __import__('image-data_GET').lambda_handler
+
 
 class Test_login_POST(TestAPIProxy.TestAPIProxy):
+    @classmethod
+    def setUpClass(self):
+        self.resource = 'login'
+        self.method = 'POST'
+        self.lambda_handler = staticmethod(__import__(self.resource + '_' + self.method).lambda_handler)
+
     def test_valid(self):
         self.assertEqual(
             self.invoke_lambda(
-                lambda_handler,
-                'POST',
-                resource=None,
                 body=None,
                 url_params=None,
                 query_params=None,
@@ -26,9 +29,6 @@ class Test_login_POST(TestAPIProxy.TestAPIProxy):
     def test_incorrect_user(self):
         self.assertEqual(
             self.invoke_lambda(
-                lambda_handler,
-                'POST',
-                resource=None,
                 body=None,
                 url_params=None,
                 query_params=None,
@@ -43,9 +43,6 @@ class Test_login_POST(TestAPIProxy.TestAPIProxy):
     def test_incorrect_pwd_for_user(self):
         self.assertEqual(
             self.invoke_lambda(
-                lambda_handler,
-                'POST',
-                resource=None,
                 body=None,
                 url_params=None,
                 query_params=None,
@@ -60,9 +57,6 @@ class Test_login_POST(TestAPIProxy.TestAPIProxy):
     def test_incorrect_format(self):
         self.assertEqual(
             self.invoke_lambda(
-                lambda_handler,
-                'POST',
-                resource=None,
                 body=None,
                 url_params=None,
                 query_params=None,
