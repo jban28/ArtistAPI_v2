@@ -51,6 +51,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: deploy
     if: ${{ always() }} #run even if deployment skipped or failed
+    env:
+      TEST_PWD: ${{ secrets.TEST_PWD }}
+      TEST_JWT: ${{ secrets.TEST_JWT }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4

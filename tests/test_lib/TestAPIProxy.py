@@ -16,7 +16,7 @@ class TestAPIProxy(unittest.TestCase):
         
         if auth:
             auth_json = {
-                "principalId": "yyyyyyyy", # The principal user identification associated with the token sent by the client.
+                "principalId": "Test_user", # The principal user identification associated with the token sent by the client.
                 "policyDocument": {
                     "Version": "2012-10-17",
                     "Statement": [
