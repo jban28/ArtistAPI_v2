@@ -7,7 +7,7 @@ sys.path.append('./src/lambda-functions')
 class Test_authenticate(unittest.TestCase):
     @classmethod
     def setUpClass(self):
-        self.lambda_handler = staticmethod(__import__('authenticate.py').lambda_handler)
+        self.lambda_handler = staticmethod(__import__('authenticate').lambda_handler)
 
     def invoke_auth(self, token):
         return self.lambda_handler(

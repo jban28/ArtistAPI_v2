@@ -1,7 +1,7 @@
 import unittest
 import sys
 sys.path.append('./src/lambda-functions')
-py_file = __import__('thumbnail.py')
+py_file = __import__('thumbnail')
 
 class Test_thumbnail(unittest.TestCase):
     @classmethod
