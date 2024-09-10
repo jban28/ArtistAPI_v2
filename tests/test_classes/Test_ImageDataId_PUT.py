@@ -7,9 +7,10 @@ sys.path.append('./src/lambda-functions')
 class Test_ImageDataId_PUT(TestAPIProxy.TestAPIProxy):
     @classmethod
     def setUpClass(self):
-        self.resource = 'image-data/\{id\}'
+        self.resource = 'image-data/{id}'
         self.method = 'PUT'
-        self.lambda_handler = staticmethod(__import__(self.resource + '_' + self.method).lambda_handler)
+        lambda_path = self.resource.replace('/', '_').replace('{', '').replace('}','') + '_' + self.method
+        self.lambda_handler = staticmethod(__import__(lambda_path).lambda_handler)
     
     def test_valid(self):
         self.assertEqual(

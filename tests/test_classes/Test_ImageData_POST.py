@@ -31,7 +31,7 @@ class Test_ImageData_POST(TestAPIProxy.TestAPIProxy):
             response['statusCode'], 200 
         )
 
-        response_json = json.parse(response['body'])['id']
+        response_json = json.loads(response['body'])
 
         self.assertIn('id', response_json)
 
