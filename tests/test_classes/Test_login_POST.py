@@ -4,7 +4,6 @@ import json
 import sys
 sys.path.append('./src/lambda-functions')
 
-
 class Test_login_POST(TestAPIProxy.TestAPIProxy):
     @classmethod
     def setUpClass(self):
@@ -18,7 +17,7 @@ class Test_login_POST(TestAPIProxy.TestAPIProxy):
                 body=None,
                 url_params=None,
                 query_params=None,
-                headers={'Authorization': 'testUser:password123'},
+                headers={'Authorization': f'testUser:{config.TEST_PWD}'},
             ),
             {
                 'statusCode': 200,

@@ -1,9 +1,8 @@
 import unittest
-from test_lib import TestAPIProxy
+from test_lib import TestAPIProxy, config
 import json
 import sys
 sys.path.append('./src/lambda-functions')
-lambda_handler = __import__('image-data_GET').lambda_handler
 
 class Test_ImageId_DELETE(TestAPIProxy.TestAPIProxy):
     @classmethod
@@ -16,13 +15,27 @@ class Test_ImageId_DELETE(TestAPIProxy.TestAPIProxy):
         self.assertEqual(
             self.invoke_lambda(
                 body=None,
-                url_params=None,
+                url_params={'id': config.test_img_db_id},
                 query_params=None,
-                headers=None,
+                headers={'Authorization': config.TEST_AUTH_TOKEN},
             ),
             {
                 'statusCode': 200,
-                'body': json.dumps('Hello from Lambda!')
+                'body': json.dumps('Resource deleted successfully')
+            }   
+        )
+
+    def test_repeat_valid(self):
+        self.assertEqual(
+            self.invoke_lambda(
+                body=None,
+                url_params={'id': config.test_img_db_id},
+                query_params=None,
+                headers={'Authorization': config.TEST_AUTH_TOKEN},
+            ),
+            {
+                'statusCode': 404,
+                'body': json.dumps('No image found for this id')
             }   
         )
     

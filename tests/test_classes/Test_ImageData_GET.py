@@ -43,6 +43,34 @@ class Test_ImageData_GET(TestAPIProxy.TestAPIProxy):
                 ]
             }
         )
+
+    def test_missing_artist(self):
+        self.assertEqual(
+            self.invoke_lambda(
+                body=None,
+                url_params=None,
+                query_params=None,
+                headers=None,
+            ),
+            {
+                'statusCode': 400,
+                'body': json.dumps('No artist specified')
+            }
+        )
+
+    def test_invalid_artist(self):
+        self.assertEqual(
+            self.invoke_lambda(
+                body=None,
+                url_params=None,
+                query_params={'artist': 'Non_existent_artist'},
+                headers=None,
+            ),
+            {
+                'statusCode': 400,
+                'body': json.dumps('Artist not found')
+            }
+        )
     
 if __name__ == '__main__':
     unittest.main()
